@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>待辦事項管理</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/dotenv@16.0.3/lib/main.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="tokenInput" class="token-input">
+        <h2>請輸入 GitHub Token</h2>
+        <input type="password" id="githubToken" placeholder="輸入您的 GitHub Token">
+        <button onclick="saveToken()">儲存</button>
+    </div>
+
+    <div id="admin" style="display: none;">
+        <header>
+            <h1>待辦事項管理</h1>
+            <div class="header-actions">
+                <button id="logoutBtn" class="secondary-btn">登出</button>
+            </div>
+        </header>
+        <main>
+            <!-- 任務列表 -->
+            <div class="task-manager">
+                <div class="task-filters">
+                    <button class="filter-btn active" data-filter="all">全部</button>
+                    <button class="filter-btn" data-filter="pending">未完成</button>
+                    <button class="filter-btn" data-filter="completed">已完成</button>
+                </div>
+
+                <div class="task-list-container">
+                    <div id="tasksList"></div>
+                    <button id="newTaskBtn" class="primary-btn">新增任務</button>
+                </div>
+
+                <!-- 編輯器 -->
+                <div class="editor">
+                    <h2>編輯任務</h2>
+                    <form id="taskForm">
+                        <input type="hidden" id="taskId">
+                        <div class="form-group">
+                            <label for="date">日期：</label>
+                            <input type="date" id="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="content">內容：</label>
+                            <textarea id="content" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="completed">
+                                已完成
+                            </label>
+                        </div>
+                        <div class="button-group">
+                            <button type="submit" class="primary-btn">儲存</button>
+                            <button type="button" id="deleteBtn" class="danger-btn">刪除</button>
+                            <button type="button" id="cancelBtn" class="secondary-btn">取消</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="config.js"></script>
+    <script type="module" src="admin.js"></script>
+</body>
+</html> 

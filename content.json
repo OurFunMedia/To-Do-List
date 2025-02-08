@@ -1,0 +1,22 @@
+{
+    "tasks": [
+        {
+            "id": "task1",
+            "date": "2024-03-20",
+            "content": "完成專案提案",
+            "completed": false
+        },
+        {
+            "id": "task2",
+            "date": "2024-03-21",
+            "content": "與客戶開會",
+            "completed": true
+        },
+        {
+            "id": "task3",
+            "date": "2024-03-22",
+            "content": "準備簡報資料",
+            "completed": false
+        }
+    ]
+} 
