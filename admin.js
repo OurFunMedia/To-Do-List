@@ -81,7 +81,10 @@ class TaskAdmin {
         try {
             const response = await fetch(`https://api.github.com/repos/${this.githubConfig.owner}/${this.githubConfig.repo}/contents/${this.githubConfig.path}`);
             const data = await response.json();
-            const content = JSON.parse(atob(data.content));
+            // 使用 TextDecoder 來正確解碼 UTF-8 內容
+            const decoder = new TextDecoder();
+            const bytes = Uint8Array.from(atob(data.content), c => c.charCodeAt(0));
+            const content = JSON.parse(decoder.decode(bytes));
             this.tasks = content.tasks;
             this.sha = data.sha;
             this.renderTasks();
@@ -94,6 +97,11 @@ class TaskAdmin {
     async saveContent() {
         try {
             const content = JSON.stringify({ tasks: this.tasks }, null, 2);
+            // 使用 TextEncoder 來正確處理 UTF-8 編碼
+            const encoder = new TextEncoder();
+            const bytes = encoder.encode(content);
+            const base64Content = btoa(String.fromCharCode(...bytes));
+
             const response = await fetch(`https://api.github.com/repos/${this.githubConfig.owner}/${this.githubConfig.repo}/contents/${this.githubConfig.path}`, {
                 method: 'PUT',
                 headers: {
@@ -102,7 +110,7 @@ class TaskAdmin {
                 },
                 body: JSON.stringify({
                     message: 'Update content via CMS',
-                    content: btoa(content),
+                    content: base64Content,
                     sha: this.sha,
                     branch: this.githubConfig.branch
                 })
